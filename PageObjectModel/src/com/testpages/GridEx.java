@@ -3,25 +3,30 @@ package com.testpages;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.openqa.selenium.Platform;
+import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import com.yahoomail.RegistrationPage;
 
-public class FormTestPage {
+public class GridEx {
 
 	public static void main(String args[]) throws InterruptedException, MalformedURLException {
 		System.out.println("Welcome to Software Testing. ");
-		System.setProperty("webdriver.chrome.driver", "C:\\TestAutomation\\chromedriver_win321/chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		DesiredCapabilities dc = new DesiredCapabilities();
-		
-		WebDriver driver1 = new RemoteWebDriver(
-	                new URL("http://localhost:4444/wd/hub"),
-	                dc);
-		
+
+		DesiredCapabilities dc = new DesiredCapabilities().chrome();
+
+		ChromeOptions options = new ChromeOptions();
+
+		options.setCapability(CapabilityType.PLATFORM_NAME, Platform.WINDOWS);
+		options.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.ACCEPT);
+		options.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+
+		WebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), dc);
 
 		driver.get("https://login.yahoo.com/");
 		driver.manage().window().fullscreen();
